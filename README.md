@@ -43,6 +43,34 @@ rm .telegram_enabled           # desabilita
 
 Sem argumento, o wrapper envia uma mensagem padrão com data/hora.
 
+## Integração com Claude Code (hook `Stop`)
+
+Para receber uma notificação no Telegram sempre que o Claude Code terminar uma resposta, configure o `telegram_wrapper.sh` como hook do evento `Stop` em `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/SEU_CAMINHO/botMessage/telegram_wrapper.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+Pontos importantes:
+
+- O hook precisa ser do tipo `Stop` — é o evento disparado quando o agente finaliza a resposta. Outros eventos (`PreToolUse`, `PostToolUse`, etc.) gerariam notificações a cada ação, o que não é o objetivo.
+- Use o caminho absoluto para o script; o Claude Code executa hooks fora do diretório do projeto.
+- Como o wrapper só envia se `.telegram_enabled` existir, você pode ligar/desligar as notificações sem editar o `settings.json` — use os slash commands `/telegram_notification_on` e `/telegram_notification_off`, ou crie/remova o arquivo `.telegram_enabled` manualmente.
+
 ## Requisitos
 
 - `bash`
