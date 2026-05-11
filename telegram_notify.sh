@@ -13,9 +13,17 @@ fi
 
 MESSAGE="$1"
 
+# --- Carrega .env se existir ---
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "${SCRIPT_DIR}/.env" ]; then
+    set -a
+    . "${SCRIPT_DIR}/.env"
+    set +a
+fi
+
 # --- Configurações ---
-BOT_TOKEN="${TELEGRAM_BOT_TOKEN:?Defina a variável de ambiente TELEGRAM_BOT_TOKEN}"
-CHAT_ID="${TELEGRAM_CHAT_ID:?Defina a variável de ambiente TELEGRAM_CHAT_ID}"
+BOT_TOKEN="${TELEGRAM_BOT_TOKEN:?Defina TELEGRAM_BOT_TOKEN (env ou .env)}"
+CHAT_ID="${TELEGRAM_CHAT_ID:?Defina TELEGRAM_CHAT_ID (env ou .env)}"
 
 # --- Envia a mensagem (curl faz o URL-encode com --data-urlencode) ---
 response=$(curl -sS -G "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
