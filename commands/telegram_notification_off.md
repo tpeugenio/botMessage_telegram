@@ -3,7 +3,7 @@ Desativa as notificações do Telegram globalmente. Use este comando para desabi
 Execute o seguinte comando no terminal (macOS):
 
 ```bash
-rm -f /Users/thiagoeugenio/development/botMessage/.telegram_enabled
+rm -f SEU_CAMINHO/botMessage/.telegram_enabled
 printf '\033[33m🔕 Notificações do Telegram DESATIVADAS\033[0m\n'
 ```
 
